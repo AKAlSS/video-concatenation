@@ -47,8 +47,7 @@ Place your long audio files in ~/Desktop/BetterDaily/Source Audio.
 Run the transcription script to generate text transcriptions.
 Identify Key Segments:
 
-After transcription, upload the transcription files here.
-I will help identify the key segments and provide a segments.txt file with timestamps.
+Identify the key segments and provide a segments.txt file with timestamps.
 Extract Audio Segments:
 
 Use the segments.txt file to extract audio segments from the long audio files.
