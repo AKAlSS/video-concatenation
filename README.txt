@@ -1,7 +1,6 @@
 README.txt
 
-Project Workflow for BetterDaily
-
+Project Workflow
 This project involves processing podcast audio and anime video to create clips that align with key themes such as training, fight, struggle, and victory. Below are the steps to follow and the scripts to run in the correct order:
 
 1. **Transcribe Podcast Audio**
