@@ -1,6 +1,6 @@
 import os
 import tkinter as tk
-from tkinter import filedialog, messagebox, simpledialog
+from tkinter import filedialog, messagebox, simpledialog, scrolledtext
 import subprocess
 
 def run_script(script, args):
@@ -43,11 +43,50 @@ def combine_audio_visual():
     if audio_dir and visual_dir and output_dir:
         run_script("combine_audio_visual.py", [audio_dir, visual_dir, output_dir])
 
+def process_videos():
+    visuals_path = filedialog.askdirectory(title="Select Visuals Directory")
+    audio_clips_path = filedialog.askdirectory(title="Select Audio Clips Directory")
+    output_path = filedialog.askdirectory(title="Select Output Directory")
+    if visuals_path and audio_clips_path and output_path:
+        run_script("video.py", [visuals_path, audio_clips_path, output_path])
+
+def process_visuals():
+    video_file = filedialog.askopenfilename(title="Select Video File", filetypes=[("MP4 files", "*.mp4")])
+    output_dir = filedialog.askdirectory(title="Select Output Directory")
+    if video_file and output_dir:
+        run_script("visuals.py", [video_file, output_dir])
+
+def show_instructions():
+    instructions = (
+        "Instructions:\n\n"
+        "1. Transcribe Audio: Select an audio file (MP3) to transcribe into text.\n"
+        "2. Create Audio Segments: Select a transcription file (TXT) and an audio file (MP3) to create audio segments based on the transcription.\n"
+        "3. Extract Video Clips: Select a video file (MP4) to detect scenes and classify them into categories.\n"
+        "4. Extract Frames: Select a video file (MP4) to extract frames at specific intervals.\n"
+        "5. Combine Audio & Visual: Select directories containing audio clips and visual clips to combine them into final videos.\n"
+        "6. Process Videos: Select directories containing visuals and audio clips to process and create final videos.\n"
+        "7. Process Visuals: Select a video file (MP4) to classify scenes and extract clips based on context.\n"
+    )
+    instructions_window = tk.Toplevel(app)
+    instructions_window.title("Instructions")
+    instructions_window.geometry("600x400")
+    text_area = scrolledtext.ScrolledText(instructions_window, wrap=tk.WORD)
+    text_area.pack(expand=True, fill='both')
+    text_area.insert(tk.INSERT, instructions)
+    text_area.configure(state='disabled')
+
 app = tk.Tk()
 app.title("Video Concatenation Project")
+app.geometry("800x600")
 
 frame = tk.Frame(app)
 frame.pack(pady=20)
+
+title_label = tk.Label(frame, text="Video Concatenation Project", font=("Helvetica", 16))
+title_label.pack(pady=10)
+
+instructions_button = tk.Button(frame, text="Instructions", command=show_instructions)
+instructions_button.pack(pady=5)
 
 btn_transcribe = tk.Button(frame, text="Transcribe Audio", command=transcribe_audio)
 btn_transcribe.pack(pady=5)
@@ -63,5 +102,11 @@ btn_extract_frames.pack(pady=5)
 
 btn_combine = tk.Button(frame, text="Combine Audio & Visual", command=combine_audio_visual)
 btn_combine.pack(pady=5)
+
+btn_process_videos = tk.Button(frame, text="Process Videos", command=process_videos)
+btn_process_videos.pack(pady=5)
+
+btn_process_visuals = tk.Button(frame, text="Process Visuals", command=process_visuals)
+btn_process_visuals.pack(pady=5)
 
 app.mainloop()
