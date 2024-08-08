@@ -12,49 +12,78 @@ def run_script(script, args):
 
 def transcribe_audio():
     audio_file = filedialog.askopenfilename(title="Select Audio File", filetypes=[("MP3 files", "*.mp3")])
+    if not audio_file:
+        return
     output_dir = filedialog.askdirectory(title="Select Output Directory")
-    if audio_file and output_dir:
-        run_script("transcribe.py", [audio_file, output_dir])
+    if not output_dir:
+        return
+    run_script("transcribe.py", [audio_file, output_dir])
 
 def create_audio_segments():
     transcription_file = filedialog.askopenfilename(title="Select Transcription File", filetypes=[("Text files", "*.txt")])
+    if not transcription_file:
+        return
     audio_file = filedialog.askopenfilename(title="Select Audio File", filetypes=[("MP3 files", "*.mp3")])
+    if not audio_file:
+        return
     output_dir = filedialog.askdirectory(title="Select Output Directory")
-    if transcription_file and audio_file and output_dir:
-        run_script("audioseg.py", [transcription_file, audio_file, output_dir])
+    if not output_dir:
+        return
+    run_script("audioseg.py", [transcription_file, audio_file, output_dir])
 
 def extract_video_clips():
     video_file = filedialog.askopenfilename(title="Select Video File", filetypes=[("MP4 files", "*.mp4")])
+    if not video_file:
+        return
     output_dir = filedialog.askdirectory(title="Select Output Directory")
-    if video_file and output_dir:
-        run_script("vidtoclips.py", [video_file, output_dir])
+    if not output_dir:
+        return
+    run_script("vidtoclips.py", [video_file, output_dir])
 
 def extract_frames():
     video_file = filedialog.askopenfilename(title="Select Video File", filetypes=[("MP4 files", "*.mp4")])
+    if not video_file:
+        return
     output_dir = filedialog.askdirectory(title="Select Output Directory")
+    if not output_dir:
+        return
     interval = simpledialog.askinteger("Input", "Enter frame extraction interval (seconds):", minvalue=1, maxvalue=600)
-    if video_file and output_dir and interval is not None:
-        run_script("extract_frames.py", [video_file, output_dir, str(interval)])
+    if not interval:
+        return
+    run_script("extract_frames.py", [video_file, output_dir, str(interval)])
 
 def combine_audio_visual():
     audio_dir = filedialog.askdirectory(title="Select Audio Clips Directory")
+    if not audio_dir:
+        return
     visual_dir = filedialog.askdirectory(title="Select Visual Clips Directory")
+    if not visual_dir:
+        return
     output_dir = filedialog.askdirectory(title="Select Output Directory")
-    if audio_dir and visual_dir and output_dir:
-        run_script("combine_audio_visual.py", [audio_dir, visual_dir, output_dir])
+    if not output_dir:
+        return
+    run_script("combine_audio_visual.py", [audio_dir, visual_dir, output_dir])
 
 def process_videos():
     visuals_path = filedialog.askdirectory(title="Select Visuals Directory")
+    if not visuals_path:
+        return
     audio_clips_path = filedialog.askdirectory(title="Select Audio Clips Directory")
+    if not audio_clips_path:
+        return
     output_path = filedialog.askdirectory(title="Select Output Directory")
-    if visuals_path and audio_clips_path and output_path:
-        run_script("video.py", [visuals_path, audio_clips_path, output_path])
+    if not output_path:
+        return
+    run_script("video.py", [visuals_path, audio_clips_path, output_path])
 
 def process_visuals():
     video_file = filedialog.askopenfilename(title="Select Video File", filetypes=[("MP4 files", "*.mp4")])
+    if not video_file:
+        return
     output_dir = filedialog.askdirectory(title="Select Output Directory")
-    if video_file and output_dir:
-        run_script("visuals.py", [video_file, output_dir])
+    if not output_dir:
+        return
+    run_script("visuals.py", [video_file, output_dir])
 
 def show_instructions():
     instructions = (
