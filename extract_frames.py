@@ -1,11 +1,6 @@
 import cv2
 import os
-
-"""
-extract_frames.py
-This script is used to extract frames from a video at specific intervals. The frames
-can be used for training a model or for manual classification of scenes.
-"""
+import sys
 
 def extract_frames(video_path, output_folder, interval=30):
     cap = cv2.VideoCapture(video_path)
@@ -13,8 +8,7 @@ def extract_frames(video_path, output_folder, interval=30):
     count = 0
     frame_count = 0
 
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+    os.makedirs(output_folder, exist_ok=True)
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -29,6 +23,11 @@ def extract_frames(video_path, output_folder, interval=30):
     cap.release()
     print(f"Extracted {frame_count} frames from the video.")
 
-video_path = "/Users/ahmadkaiss/Desktop/BetterDaily/Source Visual/anime_episode.mp4"
-output_folder = "/Users/ahmadkaiss/Desktop/BetterDaily/Visuals/frames"
-extract_frames(video_path, output_folder, interval=5)  # Extract a frame every 5 seconds
+if __name__ == "__main__":
+    if len(sys.argv) > 2:
+        video_path = sys.argv[1]
+        output_folder = sys.argv[2]
+        interval = int(sys.argv[3]) if len(sys.argv) > 3 else 30
+        extract_frames(video_path, output_folder, interval)
+    else:
+        print("Usage: python extract_frames.py <video_path> <output_folder> [interval]")
